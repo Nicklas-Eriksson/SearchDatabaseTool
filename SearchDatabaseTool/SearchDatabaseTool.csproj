@@ -46,6 +46,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDataProgram\Calculations\FindWords.cs" />
+    <Compile Include="SearchDataProgram\Calculations\TrieTree.cs" />
     <Compile Include="SearchDataProgram\Database\DB.cs" />
     <Compile Include="SearchDataProgram\UI\DisplayToUser.cs" />
     <Compile Include="SearchDataProgram\Utility\Helper.cs" />
