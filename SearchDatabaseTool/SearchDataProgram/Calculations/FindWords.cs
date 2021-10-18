@@ -18,6 +18,10 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         /// <returns></returns>
         public void WordOccurrence(string word)
         {
+            if (word == null || word == "") return;
+
+
+
             // Räkna ordet i alla 3 filer.
             // Jämföra vilket doc som har mest förekomst av ordet. TEX:
             // Lista1 = 33st ord
@@ -29,6 +33,11 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             // 1. De tre bockarna bruse. Word match = 79
             // 2. Den magiska grottan. Word match = 33
             // 3. En saga om tre fiskar. Word match = 12
+        }
+        public void ListContains(string word)
+        {
+            //testa om sökte ordet contains i listorna innan en loop sökning genomförs?
+            //finns det inte meddelas det, eller så söks bara listorna där det finns.
         }
 
         // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.

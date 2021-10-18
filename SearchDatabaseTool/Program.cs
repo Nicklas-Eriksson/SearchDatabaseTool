@@ -13,9 +13,13 @@ namespace SearchDatabaseTool
     {
         static void Main(string[] args)
         {
-            DB.MyStream();
+            var word = Console.ReadLine()?.Trim().Split(' ').First();
+           
+            Console.WriteLine($"You searched for {word}");
+            
+            Console.WriteLine(word);
 
-            Console.ReadLine();
+                Console.ReadLine();
         }
     }
 }
