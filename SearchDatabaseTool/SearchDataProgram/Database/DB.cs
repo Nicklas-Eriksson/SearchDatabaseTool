@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 
 namespace SearchDatabaseTool.SearchDataProgram.Database
 {
     public static class DB
     {
-        internal static void MyStream()
+        public static List<List<string>> AllLists = new List<List<string>>();
+
+        public static List<string> List1000 = new List<string>();
+        public static List<string> List1500 = new List<string>();
+        public static List<string> List3000 = new List<string>();
+        public static List<string> ListBig = new List<string>();
+
+        internal static void GetStream()
+        {
+            if(AllLists.Count <= 0) FillLists();
+        }
+
+        private static void FillLists()
         {
             var folder = "ShortStories/";
             var File1000 = $@"{folder}1000Words.txt";
@@ -26,44 +35,63 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
             var path3000 = Path.Combine(folderPath, File3000);
             var pathBig = Path.Combine(folderPath, FileBig);
 
-            Console.WriteLine(folderPath);
-            Console.WriteLine(path1000);
+            var pathList = new List<string>() { path1000, path1500, path3000, pathBig };
 
-            var lista1k = new List<string>();
+            AllLists.Add(List1000);
+            AllLists.Add(List1500);
+            AllLists.Add(List3000);
+            AllLists.Add(ListBig);
 
-            using (StreamReader sr = new StreamReader(path1000))
+            for (int i = 0; i < AllLists.Count; i++)
             {
-                string line;
-
-                while((line = sr.ReadLine()) != null)
+                using (StreamReader sr = new StreamReader(pathList[i]))
                 {
-                    lista1k.Add(line);
+                    string line;
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        AllLists[i].Add(line);
+                    }
                 }
-            }
+            }          
+        }
 
-
+        //Fel class!!!
+        internal static void TestPrintWord(string word)
+        {
+            GetStream();
             var count = 0;
             var x = new List<string>();
 
 
-            for (int i = 0; i < lista1k.Count; i++)
+            for (int row = 0; row < AllLists[2].Count; row++)
             {
-                if (lista1k[i].Contains("He"))
+                if (AllLists[2][row].Contains(word))
                 {
                     count++;
-                    x.Add(lista1k[i].ToString());
+                    x.Add(AllLists[2][row].ToString());
                 }
             }
 
-            Console.WriteLine(count);
-
-            foreach (var item in x)
+            Console.WriteLine($"Your word: {word} was found {count} times.");
+            Console.WriteLine("Here are the sentences they were found in:");
+            foreach (var row in x)
             {
-                Console.WriteLine(item);
+                Console.WriteLine($"Sentence: {row}\n");
             }
+            Console.ReadLine();
         }
-       
 
-        // Ladda in filerna i passande struktur (Lista eller liknande).
+
+        internal static void PrintChosenTxt(int option)
+        {
+            foreach (var line in AllLists[option-1])
+            {
+                Console.WriteLine(line);
+            }
+
+            //To stop loop
+            Console.ReadLine();
+        }
     }
 }

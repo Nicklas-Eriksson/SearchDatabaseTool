@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SearchDatabaseTool.SearchDataProgram.Calculations
@@ -9,17 +10,33 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
     class FindWords
     {
         // Hämtar filerna från DB.cs
-
+        public void WordManager()
+        {
+            
+        }
         /// <summary>
         /// Search for how many times your word is occuring in the documents.
         /// Returns a ranking of which documents containing the word the most.
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
-        public void WordOccurrence(string word)
+        public void WordOccurrence(string word, List<string> list)
         {
-            if (word == null || word == "") return;
+            if (string.IsNullOrEmpty(word)) return;
+            int count = 0;
+            //foreach (Match match in Regex.Matches(list, word))
+            //{
+            //    count++;
+            //}
+            //if (count > 0)
+            //{
+            //    //save number of occurences or return number
 
+            //}
+            //else
+            //{
+            //    //return 0
+            //}
 
 
             // Räkna ordet i alla 3 filer.
@@ -34,10 +51,22 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             // 2. Den magiska grottan. Word match = 33
             // 3. En saga om tre fiskar. Word match = 12
         }
-        public void ListContains(string word)
+        public bool ListContains(string word, List<string> list)
         {
             //testa om sökte ordet contains i listorna innan en loop sökning genomförs?
             //finns det inte meddelas det, eller så söks bara listorna där det finns.
+
+            // check if list contains word. if not it does not need to be fully checked.
+            if (list.Contains(word))
+            {
+                return true;
+            }
+            return false;
+
+        }
+        public void SortList(List<string> list)
+        {
+            list.Sort();
         }
 
         // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.

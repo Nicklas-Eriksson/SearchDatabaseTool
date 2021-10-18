@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SearchDatabaseTool.SearchDataProgram.Database;
+using SearchDatabaseTool.SearchDataProgram.UI;
 
 namespace SearchDatabaseTool
 {
@@ -13,13 +13,9 @@ namespace SearchDatabaseTool
     {
         static void Main(string[] args)
         {
-            var word = Console.ReadLine()?.Trim().Split(' ').First();
-           
-            Console.WriteLine($"You searched for {word}");
-            
-            Console.WriteLine(word);
-
-                Console.ReadLine();
+            var Menu = new DisplayToUser();
+            Menu.MainMenu();
+            Console.ReadLine();
         }
     }
 }
