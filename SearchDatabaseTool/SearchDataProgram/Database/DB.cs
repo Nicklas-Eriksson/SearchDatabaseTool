@@ -63,15 +63,18 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
             var count = 0;
             var x = new List<string>();
 
-
-            for (int row = 0; row < AllLists[2].Count; row++)
+            for (int i = 0; i < AllLists.Count; i++)
             {
-                if (AllLists[2][row].Contains(word))
+                for (int row = 0; row < AllLists[i].Count; row++)
                 {
-                    count++;
-                    x.Add(AllLists[2][row].ToString());
+                    if (AllLists[i][row].Contains(word))
+                    {
+                        count++;
+                        x.Add(AllLists[i][row].ToString());
+                    }
                 }
             }
+           
 
             Console.WriteLine($"Your word: {word} was found {count} times.");
             Console.WriteLine("Here are the sentences they were found in:");
