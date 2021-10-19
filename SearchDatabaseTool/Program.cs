@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using SearchDatabaseTool.SearchDataProgram.UI;
+﻿using SearchDatabaseTool.SearchDataProgram.UI;
+using System;
 
 namespace SearchDatabaseTool
 {
@@ -15,7 +9,8 @@ namespace SearchDatabaseTool
         {
             var Menu = new DisplayToUser();
             Menu.MainMenu();
-            Console.ReadLine();
+            //Method();
+            Console.ReadKey();
         }
     }
 }

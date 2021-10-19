@@ -1,6 +1,7 @@
 ﻿using SearchDatabaseTool.SearchDataProgram.Database;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -141,6 +142,13 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             list.Sort();
         }
 
+        public static void Method()
+        {
+            string text2 = (File.ReadAllText(@"D:\Upload\story.txt"));
+            MatchCollection matchedAuthors = RegexMethod(Console.ReadLine().Trim().ToLower()).Matches(text2);
+            Console.WriteLine(matchedAuthors.Count);
+        }
+        public static Regex RegexMethod(string search) => new Regex($@"\b{search}\b");
         // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.
 
         // Det skall gå att skriva ut samtliga resultat från er datastruktur i föregående punkt till konsollen.
