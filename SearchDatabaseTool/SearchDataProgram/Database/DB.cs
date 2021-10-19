@@ -16,7 +16,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
 
         internal static void GetStream()
         {
-            if(AllLists.Count <= 0) FillLists();
+            if (AllLists.Count <= 0) FillLists();
         }
 
         private static void FillLists()
@@ -53,47 +53,17 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
                         AllLists[i].Add(line);
                     }
                 }
-            }          
-        }
-
-        //Fel class!!!
-        internal static void TestPrintWord(string word)
-        {
-            GetStream();
-            var count = 0;
-            var x = new List<string>();
-
-            for (int i = 0; i < AllLists.Count; i++)
-            {
-                for (int row = 0; row < AllLists[i].Count; row++)
-                {
-                    if (AllLists[i][row].Contains(word))
-                    {
-                        count++;
-                        x.Add(AllLists[i][row].ToString());
-                    }
-                }
             }
-           
-
-            Console.WriteLine($"Your word: {word} was found {count} times.");
-            Console.WriteLine("Here are the sentences they were found in:");
-            foreach (var row in x)
-            {
-                Console.WriteLine($"Sentence: {row}\n");
-            }
-            Console.ReadLine();
-        }
-
+        }             
 
         internal static void PrintChosenTxt(int option)
         {
-            foreach (var line in AllLists[option-1])
+            foreach (var line in AllLists[option - 1])
             {
                 Console.WriteLine(line);
             }
 
-            //To stop loop
+            //Temp to stop loop
             Console.ReadLine();
         }
     }

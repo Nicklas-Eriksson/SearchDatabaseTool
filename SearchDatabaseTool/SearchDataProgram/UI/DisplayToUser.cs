@@ -100,7 +100,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             var word = Console.ReadLine()?.Trim().Split(' ').First();
 
 
-            DB.TestPrintWord(word);
+            FindWords.TestPrintWord(word);
             //fw.WordOccurrence(word);
         }
 

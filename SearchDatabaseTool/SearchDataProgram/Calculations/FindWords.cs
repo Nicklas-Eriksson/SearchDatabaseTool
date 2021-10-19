@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SearchDatabaseTool.SearchDataProgram.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         // Hämtar filerna från DB.cs
         public void WordManager()
         {
-            
+
         }
         /// <summary>
         /// Search for how many times your word is occuring in the documents.
@@ -51,6 +52,77 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             // 2. Den magiska grottan. Word match = 33
             // 3. En saga om tre fiskar. Word match = 12
         }
+
+        //Fel class!!!
+        public static void TestPrintWord(string word)
+        {
+            DB.GetStream();
+            var count = 0;
+            var lineContainingWord = new List<string>();
+
+            //Loops through all the lists.
+            for (int i = 0; i < DB.AllLists.Count; i++)
+            {
+                //Loops through all the rows in the list at AllList at index i.
+                for (int row = 0; row < DB.AllLists[i].Count; row++)
+                {
+                    if (DB.AllLists[i][row].Contains(word))
+                    {
+                        lineContainingWord.Add(DB.AllLists[i][row].ToString());
+                    }
+                }
+            }
+
+            //Bryt ut meningarna från raderna
+            var sentencesContainingWord = new List<string>();
+            for (int i = 0; i < lineContainingWord.Count; i++)
+            {
+                //Splits the line into sentences.
+                var sentences = lineContainingWord[i].Split('.').ToList();
+
+                //Checks if each sentence contains the word.
+                foreach (var s in sentences)
+                {
+                    if (s.Contains(word))
+                    {
+                        count++; // Vad händer om det står: pain pain pain i rad. Då räknas bara 1.
+                        sentencesContainingWord.Add(s);
+                    }
+                }
+            }
+
+
+            //Bryt ut
+            Console.WriteLine($"Your word: {word} was found {count} times.");
+            Console.WriteLine($"Your word was found in these sentences:\n");
+
+            //Skriver ut alla meningar där ordet hittats + markera ordet med en annan färg
+            for (int i = 1; i < sentencesContainingWord.Count; i++)
+            {
+                var splitSentence = sentencesContainingWord[i].Split(' ').ToList();
+                Console.Write($"{i}: ");
+                foreach (var w in splitSentence)
+                {
+                    if (!w.Contains(word))
+                    {
+                        Console.Write($"{w} ");
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write($"{w}");
+                        Console.ResetColor();
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            //Temp
+            Console.ReadLine();
+        }
+
         public bool ListContains(string word, List<string> list)
         {
             //testa om sökte ordet contains i listorna innan en loop sökning genomförs?
