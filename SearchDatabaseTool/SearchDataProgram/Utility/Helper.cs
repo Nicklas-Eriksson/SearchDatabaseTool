@@ -10,7 +10,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Utils
     /// <summary>
     /// Utility classes to help with programming.
     /// </summary>
-    public class Helper
+    public static class Helper
     {
         /// <summary>
         /// Prompts user with an error.
@@ -18,7 +18,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Utils
         /// </summary>
         /// <param name="e">"" for default error or optional.</param>
         /// <returns></returns>
-        internal string Error(string e)
+        internal static string Error(string e)
         {
             Thread.Sleep(1500);
 
@@ -28,31 +28,34 @@ namespace SearchDatabaseTool.SearchDataProgram.Utils
         }
 
         //Test this method
-        public bool IsNumb(int nr) 
+        public static bool IsNumb(int nr) 
         {
             return false;
         }
-       
+
         /// <summary>
         /// For menu options.
-        /// if input is not able to be parsed 0 is returned.
-        /// if number is lower than minInput or higher than maxOutput 0 is returned.
+        /// if input is not able to be parsed the method is called again.
+        /// if number is lower than minInput or higher than maxOutput is called again.
+        /// if input == q user wants to go back to previous menu.
         /// </summary>
-        internal int GetUserInput(int minInput, int maxOutput)
+        internal static int GetUserInput(int minInput, int maxOutput)
         {
-            var success = Int32.TryParse(Console.ReadLine().Trim().ToLower(), out int number);
+            var input = Console.ReadLine().Trim().ToLower();
+            var success = Int32.TryParse(input, out int number);
             if (success == false ||number < minInput || number > maxOutput)
             {
+                if (input.StartsWith("q")) return 0; //user wants to go back
                 Error("");
                 GetUserInput(minInput, maxOutput);
             }
             return number;
         }
-
+               
         /// <summary>
         /// Exits the application with exit code 0.
         /// </summary>
-        internal void ExitProgram()
+        internal static void ExitProgram()
         {
             Environment.Exit(0);
         }

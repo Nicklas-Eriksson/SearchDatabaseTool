@@ -12,7 +12,6 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
 {
     internal class DisplayToUser
     {
-        readonly Helper h = new Helper();
         readonly FindWords fw = new FindWords();
         //readonly DB db = new DB();
 
@@ -24,7 +23,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             Console.Clear();
             bool loop = true;
             PrintMenuOptions();
-            var input = h.GetUserInput(1, 4);
+            var input = Helper.GetUserInput(1, 4);
             if (input == 0) loop = true;
             do
             {
@@ -48,7 +47,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                     Console.WriteLine("Not implemented!");
                     break;
                 case 4:
-                    h.ExitProgram();
+                    Helper.ExitProgram();
                     break;
             }
         }
@@ -85,7 +84,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             Console.WriteLine("==========================");
 
             bool loop = true;
-            var input = h.GetUserInput(1, 5);
+            var input = Helper.GetUserInput(1, 5);
             if (input == 0) loop = true;
             do
             {
@@ -105,7 +104,8 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         }
 
         /// <summary>
-        /// Prints out the alternatives for te user.
+        /// Prints out the alternatives for the user.
+        /// Options 4
         /// </summary>
         private void PrintMenuOptions()
         {
@@ -115,6 +115,34 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             Console.WriteLine("|| 3. Previous results...... ||");
             Console.WriteLine("|| 4. Exit application...... ||");
             Console.WriteLine("===============================");
+        }
+
+        /// <summary>
+        /// Prints out the previous results for the user.
+        /// Options 4
+        /// </summary>
+        private void PrintPreviousResults()
+        {
+            Console.WriteLine("=====================================================");
+            Console.WriteLine("|| 1. Print out all results from previous search. ||");
+            Console.WriteLine("|| 2. Print out a specific search result......... ||");
+            Console.WriteLine("|| 3. Back to main menu.......................... ||");
+            Console.WriteLine("|| 4. Exit application........................... ||");
+            Console.WriteLine("=====================================================");
+        }
+
+        private void PrintASpecificSearchResult(List<string> searchResultCollection)
+        {
+            Console.WriteLine("Press [Q] to go back to previous menu");
+
+            var index = 0;
+            foreach (var r in searchResultCollection)
+            {
+                Console.WriteLine($"|| {index}. {r}");
+            }
+            Console.WriteLine("\nChoose your result to inspect further");
+            Helper.GetUserInput(1, searchResultCollection.Count);
+            //Ta vidare
         }
     }
 }

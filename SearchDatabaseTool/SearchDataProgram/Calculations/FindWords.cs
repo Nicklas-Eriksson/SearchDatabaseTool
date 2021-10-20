@@ -149,10 +149,16 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             Console.WriteLine(matchedAuthors.Count);
         }
         public static Regex RegexMethod(string search) => new Regex($@"\b{search}\b");
-        // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.
-            //Text1.txt contained the word 
 
+        // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.
         // Det skall gå att skriva ut samtliga resultat från er datastruktur i föregående punkt till konsollen.
+        //välja vilken sökning du vill läsa mer om
+        //skriv ut alla sökningar
+
+        //Search: "alarming" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
+        //Search: "book" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
+        //Search: "frog" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
+
 
         // Användaren skall ha möjlighet att sortera orden i dokumenten i bokstavsordning och skriva ut de första x orden till konsolen.
 
