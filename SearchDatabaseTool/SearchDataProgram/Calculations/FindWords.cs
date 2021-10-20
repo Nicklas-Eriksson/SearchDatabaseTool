@@ -142,6 +142,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         }
 
         // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.
+            //Text1.txt contained the word 
 
         // Det skall gå att skriva ut samtliga resultat från er datastruktur i föregående punkt till konsollen.
 
