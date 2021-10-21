@@ -9,6 +9,13 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
     {
         public static List<List<string>> AllLists = new List<List<string>>();
 
+        /// <summary>
+        /// Key = Namn på listan.  Value = listan med txt.
+        /// </summary>
+        public static Dictionary<string, List<string>> AllLists2 = new Dictionary<string, List<string>>();
+        //public static List<Dictionary<string, int>> test = new List<Dictionary<string, int>>();
+        //public static Dictionary<string, Dictionary<string, int>> test = new Dictionary<string, Dictionary<string, int>>();
+
         public static List<string> List1000 = new List<string>();
         public static List<string> List1500 = new List<string>();
         public static List<string> List3000 = new List<string>();

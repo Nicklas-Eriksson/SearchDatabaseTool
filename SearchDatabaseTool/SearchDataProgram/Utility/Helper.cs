@@ -27,12 +27,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Utils
             return e;
         }
 
-        //Test this method
-        public static bool IsNumb(int nr) 
-        {
-            return false;
-        }
-
         /// <summary>
         /// For menu options.
         /// if input is not able to be parsed the method is called again.

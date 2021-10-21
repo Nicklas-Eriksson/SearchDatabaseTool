@@ -1,4 +1,5 @@
 ﻿using SearchDatabaseTool.SearchDataProgram.Database;
+using SearchDatabaseTool.SearchDataProgram.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,11 +12,29 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
 {
     class FindWords
     {
+        public static Dictionary<string, int> DocNameAndWordOccurance = new Dictionary<string, int>();
+        public static List<string> WordsSearched = new List<string>();
+        public static List<int> WordMatchCounter = new List<int>();
+        private static int index = 1;
+
+        //TEST ATT SKRIVA UT TIDIGARE SÖKNINGAR
+        public static void PrintOutPriorSearches()
+        {
+            Console.WriteLine("Here are your prior searches:\n");
+
+
+            foreach (var item in FileNameSearchWordAndCounter.myCollection)
+            {
+                Console.WriteLine($"Word: {item.Item2}\nTitle: {item.Item1}\nCount: {item.Item3}\n");
+            }
+        }
+
         // Hämtar filerna från DB.cs
         public void WordManager()
         {
 
         }
+
         /// <summary>
         /// Search for how many times your word is occuring in the documents.
         /// Returns a ranking of which documents containing the word the most.
@@ -54,47 +73,50 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             // 3. En saga om tre fiskar. Word match = 12
         }
 
-        //Fel class!!!
+        //TESTVERISON
         public static void TestPrintWord(string word)
         {
+            WordsSearched.Add(word); //Addar sökordet i en lista
             DB.GetStream();
-            var count = 0;
-            var lineContainingWord = new List<string>();
+
+            //laddar in allList in i dictionaryn
+            if(index == 1)
+            {
+                foreach (var list in DB.AllLists)
+                {
+                    DB.AllLists2.Add($"Textfil:{index}.txt", list);
+                    index++;
+                }
+            }
+           
+            var sentencesContainingWord = new List<string>();
 
             //Loops through all the lists.
-            for (int i = 0; i < DB.AllLists.Count; i++)
+            foreach (var keyValueCombination in DB.AllLists2)
             {
+                var count = 0;
+
                 //Loops through all the rows in the list at AllList at index i.
-                for (int row = 0; row < DB.AllLists[i].Count; row++)
+                for (int row = 0; row < keyValueCombination.Value.Count; row++)
                 {
-                    if (DB.AllLists[i][row].Contains(word))
+                    if (keyValueCombination.Value[row].Contains(word))
                     {
-                        lineContainingWord.Add(DB.AllLists[i][row].ToString());
+                        var sentences = keyValueCombination.Value[row].ToString().Split('.').ToList();
+                        foreach (var s in sentences)
+                        {
+                            if (s.Contains(word))
+                            {
+                                count++; // Vad händer om det står: pain pain pain i rad. Då räknas bara 1.
+                                sentencesContainingWord.Add(s);
+                            }
+                        }
                     }
                 }
+                FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, word, count);
             }
-
-            //Bryt ut meningarna från raderna
-            var sentencesContainingWord = new List<string>();
-            for (int i = 0; i < lineContainingWord.Count; i++)
-            {
-                //Splits the line into sentences.
-                var sentences = lineContainingWord[i].Split('.').ToList();
-
-                //Checks if each sentence contains the word.
-                foreach (var s in sentences)
-                {
-                    if (s.Contains(word))
-                    {
-                        count++; // Vad händer om det står: pain pain pain i rad. Då räknas bara 1.
-                        sentencesContainingWord.Add(s);
-                    }
-                }
-            }
-
 
             //Bryt ut
-            Console.WriteLine($"Your word: {word} was found {count} times.");
+            Console.WriteLine($"Your word: {FileNameSearchWordAndCounter.SearchWord} was found {FileNameSearchWordAndCounter.TotalWordCounter} times.");
             Console.WriteLine($"Your word was found in these sentences:\n");
 
             //Skriver ut alla meningar där ordet hittats + markera ordet med en annan färg
@@ -104,7 +126,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 Console.Write($"{i}: ");
                 foreach (var w in splitSentence)
                 {
-                    if (!w.Contains(word))
+                    if (!w.Contains(FileNameSearchWordAndCounter.SearchWord))
                     {
                         Console.Write($"{w} ");
                     }
@@ -120,9 +142,14 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 Console.WriteLine();
             }
 
-            //Temp
+            FileNameSearchWordAndCounter.TotalWordCounter = 0;
+
+            Console.WriteLine("Press any key to go back!");
             Console.ReadLine();
+            var d = new DisplayToUser();
+            d.MainMenu();
         }
+
 
         public bool ListContains(string word, List<string> list)
         {

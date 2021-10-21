@@ -1,12 +1,10 @@
-﻿using System;
+﻿using SearchDatabaseTool.SearchDataProgram.Calculations;
+using SearchDatabaseTool.SearchDataProgram.Database;
+using SearchDatabaseTool.SearchDataProgram.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using SearchDatabaseTool.SearchDataProgram.Calculations;
-using SearchDatabaseTool.SearchDataProgram.Utils;
-using SearchDatabaseTool.SearchDataProgram.Database;
 
 namespace SearchDatabaseTool.SearchDataProgram.UI
 {
@@ -43,8 +41,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                     SelectAText();
                     break;
                 case 3:
-                    //DB.GetStream();
-                    Console.WriteLine("Not implemented!");
+                    OptionForPrintPreviousResults();
                     break;
                 case 4:
                     Helper.ExitProgram();
@@ -68,7 +65,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             }
         }
 
-        private void SelectAText()
+              private void SelectAText()
         {
             Console.Clear();
 
@@ -131,6 +128,31 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             Console.WriteLine("=====================================================");
         }
 
+        private void OptionForPrintPreviousResults()
+        {
+            //Swap
+            Console.Write("Option: ");
+            switch (Helper.GetUserInput(1,4))
+            {
+                case 1:
+                    //Byt ut! Detta r test
+                    PrintPreviousResults();
+                    FindWords.PrintOutPriorSearches();
+                    break;
+                case 2:
+                    Console.WriteLine("Not Implemented");
+                    Thread.Sleep(1300);
+                    MainMenu();
+                    break;
+                case 3:
+                    MainMenu();
+                    break;
+                case 4:
+                    Helper.ExitProgram();
+                    break;
+            }
+        }
+
         private void PrintASpecificSearchResult(List<string> searchResultCollection)
         {
             Console.WriteLine("Press [Q] to go back to previous menu");
@@ -141,8 +163,20 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 Console.WriteLine($"|| {index}. {r}");
             }
             Console.WriteLine("\nChoose your result to inspect further");
-            Helper.GetUserInput(1, searchResultCollection.Count);
-            //Ta vidare
+            Console.Write("Option: ");
+            var result = Helper.GetUserInput(1, searchResultCollection.Count);
+            if (result == 0)
+                PrintPreviousResults();
+            //else ChosenResult(result);
+        }
+
+        private void ChosenResult(int r, Dictionary<int, string> collection)
+        {
+            //Console.WriteLine($"Search: {word} was found a total of {totalTimes} times.");
+            //for (int i = 0; i < collection.Count; i++)
+            //{
+            //    Console.WriteLine($"{collection.nr} times from {collection.doc}.txt.");
+            //}
         }
     }
 }
