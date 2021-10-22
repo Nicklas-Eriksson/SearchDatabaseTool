@@ -161,11 +161,10 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             int counter = 0;
             var word = WordsSearched.Last();
-            var words = new List<string>();
             for (int i = 0; i < list.Count; i++)
             {
-                words.AddRange(list[i].Split(' '));
-                for (int j = 0; j < words.Count; j++)
+                var words = list[i].Split(' ');
+                for (int j = 0; j < words.Length; j++)
                 {
                     if (words[j].ToLower().Equals(word))
                     {
