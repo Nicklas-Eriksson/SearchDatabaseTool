@@ -127,8 +127,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             var sentencesContainingWord = new List<string>();
             var word = WordsSearched.Last();
-            //Loops through all the lists.
-
+           
             //Loops through all the rows in the list at AllList at index i.
             foreach (var row in list)
             {
@@ -250,7 +249,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             var d = new DisplayToUser();
             d.MainMenu();
         }
-
 
         //public bool ListContains(string word, List<string> list)
         //{
