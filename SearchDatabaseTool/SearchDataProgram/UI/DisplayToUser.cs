@@ -96,7 +96,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             var word = Console.ReadLine()?.Trim().Split(' ').First();
 
 
-            FindWords.TestPrintWord(word);
+            FindWords.CallerMethod(word);
             //fw.WordOccurrence(word);
         }
 
