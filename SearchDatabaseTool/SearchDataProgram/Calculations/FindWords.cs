@@ -139,7 +139,23 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                     {
                         if (s.ToLower().Contains(word))
                         {
-                            sentencesContainingWord.Add(s);
+                            var words = s.ToLower().Split(' ');
+                            var sentenseMatchExact = new List<bool>();
+                            foreach (var w in words)
+                            {
+                                if (w.Equals(word))
+                                {
+                                    sentenseMatchExact.Add(true);
+                                }
+                                else
+                                {
+                                    sentenseMatchExact.Add(false);
+                                }
+                            }
+                            if (sentenseMatchExact.Contains(true))
+                            {
+                                sentencesContainingWord.Add(s);
+                            }
                         }
                     }
                 }
@@ -208,10 +224,10 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             for (int i = 0; i < sentencesContainingWord.Count; i++)
             {
                 var splitSentence = sentencesContainingWord[i].Split(' ').ToList();
-                Console.Write($"{i+1}: ");
+                Console.Write($"{i + 1}: ");
                 foreach (var w in splitSentence)
                 {
-                    if (!w.ToLower().Contains(FileNameSearchWordAndCounter.SearchWord))
+                    if (!w.ToLower().Equals(FileNameSearchWordAndCounter.SearchWord))
                     {
                         Console.Write($"{w} ");
                     }

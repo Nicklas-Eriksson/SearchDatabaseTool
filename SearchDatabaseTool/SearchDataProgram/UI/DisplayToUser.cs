@@ -41,6 +41,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                     SelectAText();
                     break;
                 case 3:
+                    PrintPreviousResults();
                     OptionForPrintPreviousResults();
                     break;
                 case 4:
@@ -65,7 +66,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             }
         }
 
-              private void SelectAText()
+        private void SelectAText()
         {
             Console.Clear();
 
@@ -120,6 +121,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// </summary>
         private void PrintPreviousResults()
         {
+            Console.Clear();
             Console.WriteLine("=====================================================");
             Console.WriteLine("|| 1. Print out all results from previous search. ||");
             Console.WriteLine("|| 2. Print out a specific search result......... ||");
@@ -132,11 +134,10 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         {
             //Swap
             Console.Write("Option: ");
-            switch (Helper.GetUserInput(1,4))
+            switch (Helper.GetUserInput(1, 4))
             {
                 case 1:
                     //Byt ut! Detta r test
-                    PrintPreviousResults();
                     FindWords.PrintOutPriorSearches();
                     break;
                 case 2:
