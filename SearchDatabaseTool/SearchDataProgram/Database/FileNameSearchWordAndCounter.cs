@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SearchDatabaseTool.SearchDataProgram.Database
 {
@@ -22,6 +21,5 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
             TotalWordCounter += wordCounter;
             FileNameSearchWordAndCounter.MyCollection.Add((textTitle, searchWord, wordCounter));
         }
-
     }
 }
