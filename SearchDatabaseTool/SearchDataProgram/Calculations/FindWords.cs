@@ -10,7 +10,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         public static Dictionary<string, int> DocNameAndWordOccurance = new Dictionary<string, int>();
         public static List<int> WordMatchCounter = new List<int>();
         private static int index = 1;
-                
+
         internal static void CallerMethod(string word)
         {
             FileNameSearchWordAndCounter.SearchWords.Add(word); //Addar sökordet i en lista
@@ -24,16 +24,19 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             foreach (var keyValueCombination in DB.AllLists2)
             {
-                var sentenses = LoopThroughListRowsTESTMETOD(keyValueCombination.Value);
+                var sentenses = LoopThroughListRows(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentenses);
+                //var count = CheckSentencesForMultipleWords(sentenses, 0, 0);
                 FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, FileNameSearchWordAndCounter.SearchWords.Last(), count);
                 DisplayToUser.PrintWord(sentenses);
             }
         }
 
+        /// <summary>
+        /// Loads up the list with all the txt docs once.
+        /// </summary>
         public static void LoadLists()
         {
-            //laddar in allList in i dictionaryn
             if (index == 1)
             {
                 foreach (var list in DB.AllLists)
@@ -44,7 +47,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             }
         }
 
-        private static List<string> LoopThroughListRowsTESTMETOD(List<string> list)
+        private static List<string> LoopThroughListRows(List<string> list)
         {
             var sentencesContainingWord = new List<string>();
             var word = FileNameSearchWordAndCounter.SearchWords.Last();
@@ -79,16 +82,30 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         private static int CheckSentencesForMultipleWords(List<string> list)
         {
             int counter = 0;
-            var word = FileNameSearchWordAndCounter.SearchWords.Last();
             for (int i = 0; i < list.Count; i++)
             {
                 var words = list[i].Split(' ');
                 for (int j = 0; j < words.Length; j++)
                 {
-                    if (words[j].ToLower().Equals(word)) counter++;
+                    if (words[j].ToLower().Equals(FileNameSearchWordAndCounter.SearchWords.Last())) counter++;
                 }
             }
+
             return counter;
         }
+
+        //private static int CheckSentencesForMultipleWords(List<string> list, int counter, int i)
+        //{
+
+        //    if (i >= list.Count) return counter;
+
+        //    var words = list[i].Split(' ');
+        //    for (int j = 0; j < words.Length; j++)
+        //        if (words[j].ToLower().Equals(FileNameSearchWordAndCounter.SearchWords.Last())) counter++;
+
+        //    CheckSentencesForMultipleWords(list, counter, i+1);
+
+        //    return counter;
+        //}
     }
 }
