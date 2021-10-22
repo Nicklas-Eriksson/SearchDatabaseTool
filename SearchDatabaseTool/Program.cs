@@ -13,8 +13,6 @@ namespace SearchDatabaseTool
             FindWords.LoadLists(); //adderar namn på listor + listorna
             var Menu = new DisplayToUser();
             Menu.MainMenu();
-            //Method();
-            Console.ReadKey();
         }
     }
 }

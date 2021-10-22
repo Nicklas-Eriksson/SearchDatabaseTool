@@ -19,12 +19,10 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             {
                 Console.Clear();
                 PrintMenuOptions();
-                Console.Write("Option: ");
                 var input = Helper.GetUserInput(1, 4);
                 if (input == 0) loop = false;
                 OptionForMainMenu(input);
-            }
-            while (loop);
+            } while (loop);
         }
 
         private void OptionForMainMenu(int option)
@@ -91,10 +89,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         private void SelectAWordToSearch()
         {
             Console.Write("\nWord: ");
-            var word = Console.ReadLine()?.Trim().Split(' ').First();
-
-            FindWords.CallerMethod(word);
-            //fw.WordOccurrence(word);
+            FindWords.CallerMethod(Console.ReadLine()?.Trim().Split(' ').First());
         }
 
         /// <summary>
@@ -165,17 +160,13 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             {
                 ChosenResult(searchResultCollection[result - 1]);
             }
-            Console.WriteLine("Press any key to continues");
-            Console.ReadLine();
+            Helper.PressAnyKeyToContinue();
         }
 
         private void ChosenResult(string chosenOption)
         {
             //Console.WriteLine($"Search: {word} was found a total of {totalTimes} times.");
-            //for (int i = 0; i < collection.Count; i++)
-            //{
-            //    Console.WriteLine($"{collection.nr} times from {collection.doc}.txt.");
-            //}
+            //for (int i = 0; i < collection.Count; i++) Console.WriteLine($"{collection.nr} times from {collection.doc}.txt.");
         }
 
         public static void PrintWord(List<string> sentencesContainingWord)
@@ -185,10 +176,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             var word = searchWord[0].ToString().ToUpper() + (searchWord.Substring(1));
 
             Console.WriteLine($"\nYour word: {word} was found {nr} times.");
-            if (nr != 0)
-            {
-                Console.WriteLine($"{word} was found in these sentences:\n");
-            }
+            if (nr != 0) Console.WriteLine($"{word} was found in these sentences:\n");
 
             for (int i = 0; i < sentencesContainingWord.Count; i++)
             {
@@ -196,10 +184,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 Console.Write($"{i + 1}: ");
                 foreach (var w in splitSentence)
                 {
-                    if (!w.ToLower().Equals(FileNameSearchWordAndCounter.SearchWord))
-                    {
-                        Console.Write($"{w} ");
-                    }
+                    if (!w.ToLower().Equals(FileNameSearchWordAndCounter.SearchWord)) Console.Write($"{w} ");
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.White;
@@ -214,9 +199,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             }
 
             FileNameSearchWordAndCounter.TotalWordCounter = 0;
-
-            Console.WriteLine("\nPress any key to go back!");
-            Console.ReadLine();
+            Helper.PressAnyKeyToContinue();
             new DisplayToUser().MainMenu();
         }
 

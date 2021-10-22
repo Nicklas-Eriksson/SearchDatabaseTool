@@ -63,20 +63,11 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                             var sentenseMatchExact = new List<bool>();
                             foreach (var w in words)
                             {
-                                if (w.Equals(word))
-                                {
-                                    sentenseMatchExact.Add(true);
-                                }
-                                else
-                                {
-                                    sentenseMatchExact.Add(false);
-                                }
+                                if (w.Equals(word)) sentenseMatchExact.Add(true);
+                                else sentenseMatchExact.Add(false);
                             }
 
-                            if (sentenseMatchExact.Contains(true))
-                            {
-                                sentencesContainingWord.Add(s);
-                            }
+                            if (sentenseMatchExact.Contains(true)) sentencesContainingWord.Add(s);
                         }
                     }
                 }
@@ -94,10 +85,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 var words = list[i].Split(' ');
                 for (int j = 0; j < words.Length; j++)
                 {
-                    if (words[j].ToLower().Equals(word))
-                    {
-                        counter++;
-                    }
+                    if (words[j].ToLower().Equals(word)) counter++;
                 }
             }
             return counter;
