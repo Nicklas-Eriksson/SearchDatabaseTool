@@ -14,15 +14,16 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         public static List<string> WordsSearched = new List<string>();
         public static List<int> WordMatchCounter = new List<int>();
         private static int index = 1;
+        private static int _i = 0;
 
         //TEST ATT SKRIVA UT TIDIGARE SÖKNINGAR
-        public static void PrintOutPriorSearches()
+        public static void PrintOutPriorSearches(List<(string, string, int)> allLists, int i)
         {
-            Console.WriteLine("Here are your prior searches:\n");
-
-            foreach (var item in FileNameSearchWordAndCounter.myCollection)
+            if (allLists.Count > i)
             {
-                Console.WriteLine($"Word: {item.Item2}\nTitle: {item.Item1}\nCount: {item.Item3}\n");
+                Console.WriteLine("Here are your prior searches:\n");
+                Console.WriteLine($"Word: {allLists.FirstOrDefault().Item2}\nTitle: {allLists.FirstOrDefault().Item1}\nCount: {allLists.FirstOrDefault().Item3}\n");
+                PrintOutPriorSearches(allLists, i + 1);
             }
         }
 
@@ -127,7 +128,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             var sentencesContainingWord = new List<string>();
             var word = WordsSearched.Last();
-           
+
             //Loops through all the rows in the list at AllList at index i.
             foreach (var row in list)
             {
@@ -160,15 +161,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 }
             }
 
-            //for (int row = 0; row < list.Values.Count; row++)
-            //{
-            //    if (list.Values[row].Contains(word))
-            //    {
-            //        var sentences = list.Value[row].Split('.').ToString();
-            //        sentencesContainingWord.Add(sentences);
-            //    }
-            //}
-
             return sentencesContainingWord;
         }
 
@@ -189,35 +181,19 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             }
             return counter;
         }
-
-        //public static int FindWordsFromSearch(List<string> list, string search) //Sökning på specifika ord metod
-        //{
-        //    //kanske ska ta in huvudlistan istället och en metod får loopa in alla i denna. se om det blir mer exakt resultat och mindre dubbelräkning/nollställning
-        //    int counter = 0;
-        //    var splitRow = new List<string>();
-        //    for (int i = 0; i < list.Count; i++)
-        //    {
-        //        if (list[i].Contains(search))
-        //        {
-        //            splitRow = list[i].Split(' ').ToList();
-        //            for (int j = 0; j < splitRow.Count; j++)
-        //            {
-        //                if (splitRow[j].Equals(search))
-        //                {
-        //                    counter++;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return counter;
-        //}
-
+        
         //TESTVERISON
         public static void TestPrintWord(List<string> sentencesContainingWord)
         {
-            //Bryt ut
-            Console.WriteLine($"Your word: {FileNameSearchWordAndCounter.SearchWord} was found {FileNameSearchWordAndCounter.TotalWordCounter} times.");
-            Console.WriteLine($"Your word was found in these sentences:\n");
+            var nr = FileNameSearchWordAndCounter.TotalWordCounter;
+            var searchWord = FileNameSearchWordAndCounter.SearchWord;
+            var word = searchWord.ToString().ToUpper() + (searchWord.Substring(1));
+
+            Console.WriteLine($"\nYour word: {word} was found {nr} times.");
+            if (nr != 0)
+            {
+                Console.WriteLine($"{word} was found in these sentences:\n");
+            }
 
             //Skriver ut alla meningar där ordet hittats + markera ordet med en annan färg
             for (int i = 0; i < sentencesContainingWord.Count; i++)
@@ -239,61 +215,15 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                         Console.Write(" ");
                     }
                 }
+
                 Console.WriteLine();
             }
 
             FileNameSearchWordAndCounter.TotalWordCounter = 0;
 
-            Console.WriteLine("Press any key to go back!");
+            Console.WriteLine("\nPress any key to go back!");
             Console.ReadLine();
-            var d = new DisplayToUser();
-            d.MainMenu();
+            new DisplayToUser().MainMenu();
         }
-
-        //public bool ListContains(string word, List<string> list)
-        //{
-        //    //testa om sökte ordet contains i listorna innan en loop sökning genomförs?
-        //    //finns det inte meddelas det, eller så söks bara listorna där det finns.
-
-        //    // check if list contains word. if not it does not need to be fully checked.
-        //    if (list.Contains(word))
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-
-        //}
-        //public void SortList(List<string> list)
-        //{
-        //    list.Sort();
-        //}
-
-        //public static void Method()
-        //{
-        //    string text2 = (File.ReadAllText(@"D:\Upload\story.txt"));
-        //    MatchCollection matchedAuthors = RegexMethod(Console.ReadLine().Trim().ToLower()).Matches(text2);
-        //    Console.WriteLine(matchedAuthors.Count);
-        //}
-        //public static Regex RegexMethod(string search) => new Regex($@"\b{search}\b");
-
-        // Spara resultatet av SÖKNINGEN i en icke-linjär eller abstrakt datastruktur.
-        // Det skall gå att skriva ut samtliga resultat från er datastruktur i föregående punkt till konsollen.
-        //välja vilken sökning du vill läsa mer om
-        //skriv ut alla sökningar
-
-        //Search: "alarming" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
-        //Search: "book" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
-        //Search: "frog" was found a total of 99 times, 49 times from Text3000.txt, 40 times from Text1500.txt & 10 times from Text1000.txt.
-
-
-        // Användaren skall ha möjlighet att sortera orden i dokumenten i bokstavsordning och skriva ut de första x orden till konsolen.
-
-        // Ge användaren feedback på resultat av kommandon.
-
-        // Tidskomplexiteten för minst 2 funktioner skall skrivas som kommentarer i koden.
-
-        // Minst en funktion skall vara rekursiv i programmet.
-
-        // Koden skall vara kommenterad.
     }
 }

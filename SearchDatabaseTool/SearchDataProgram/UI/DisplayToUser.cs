@@ -10,21 +10,19 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
 {
     internal class DisplayToUser
     {
-        readonly FindWords fw = new FindWords();
-        //readonly DB db = new DB();
-
         /// <summary>
         /// Prompts user to choose a option.
         /// </summary>
         internal void MainMenu()
         {
-            Console.Clear();
-            bool loop = true;
-            PrintMenuOptions();
-            var input = Helper.GetUserInput(1, 4);
-            if (input == 0) loop = true;
+            bool loop = false;
             do
             {
+                Console.Clear();
+                PrintMenuOptions();
+                var input = Helper.GetUserInput(1, 4);
+                if (input == 0) loop = false;
+                Console.Write("Option: ");
                 OptionForMainMenu(input);
             }
             while (loop);
@@ -93,7 +91,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
 
         private void SelectAWordToSearch()
         {
-            Console.Write("Word: ");
+            Console.Write("\nWord: ");
             var word = Console.ReadLine()?.Trim().Split(' ').First();
 
 
@@ -137,8 +135,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             switch (Helper.GetUserInput(1, 4))
             {
                 case 1:
-                    //Byt ut! Detta r test
-                    FindWords.PrintOutPriorSearches();
+                    FindWords.PrintOutPriorSearches(FileNameSearchWordAndCounter.myCollection, 0);
                     break;
                 case 2:
                     Console.WriteLine("Not Implemented");
