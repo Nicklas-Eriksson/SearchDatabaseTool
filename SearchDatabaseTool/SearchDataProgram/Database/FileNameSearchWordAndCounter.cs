@@ -8,7 +8,8 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
         /// <summary>
         /// Title, SearchWord, Counter.
         /// </summary>
-        public static List<(string, string, int)> myCollection = new List<(string, string, int)>();
+        public static List<(string, string, int)> MyCollection = new List<(string, string, int)>();
+        public static List<string> SearchWords = new List<string> ();
 
         public static string TextTitle { get; internal set; }
         public static string SearchWord { get; internal set; }
@@ -19,7 +20,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
             TextTitle = textTitle;
             SearchWord = searchWord;
             TotalWordCounter += wordCounter;
-            FileNameSearchWordAndCounter.myCollection.Add((textTitle, searchWord, wordCounter));
+            FileNameSearchWordAndCounter.MyCollection.Add((textTitle, searchWord, wordCounter));
         }
 
     }

@@ -20,9 +20,9 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             {
                 Console.Clear();
                 PrintMenuOptions();
+                Console.Write("Option: ");
                 var input = Helper.GetUserInput(1, 4);
                 if (input == 0) loop = false;
-                Console.Write("Option: ");
                 OptionForMainMenu(input);
             }
             while (loop);
@@ -135,11 +135,10 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             switch (Helper.GetUserInput(1, 4))
             {
                 case 1:
-                    FindWords.PrintOutPriorSearches(FileNameSearchWordAndCounter.myCollection, 0);
+                    FindWords.PrintOutPriorSearches(FileNameSearchWordAndCounter.MyCollection, 0);
                     break;
                 case 2:
-                    Console.WriteLine("Not Implemented");
-                    Thread.Sleep(1300);
+                    PrintASpecificSearchResult(FileNameSearchWordAndCounter.SearchWords);
                     MainMenu();
                     break;
                 case 3:
@@ -165,7 +164,9 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             var result = Helper.GetUserInput(1, searchResultCollection.Count);
             if (result == 0)
                 PrintPreviousResults();
-            //else ChosenResult(result);
+
+            Console.WriteLine("Press any key to continues");
+            Console.ReadLine();
         }
 
         private void ChosenResult(int r, Dictionary<int, string> collection)

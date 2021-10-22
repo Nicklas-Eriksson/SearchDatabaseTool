@@ -11,10 +11,8 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
     public class FindWords
     {
         public static Dictionary<string, int> DocNameAndWordOccurance = new Dictionary<string, int>();
-        public static List<string> WordsSearched = new List<string>();
         public static List<int> WordMatchCounter = new List<int>();
         private static int index = 1;
-        private static int _i = 0;
 
         //TEST ATT SKRIVA UT TIDIGARE SÖKNINGAR
         public static void PrintOutPriorSearches(List<(string, string, int)> allLists, int i)
@@ -29,7 +27,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
 
         public static void CallerMethod(string word)
         {
-            WordsSearched.Add(word); //Addar sökordet i en lista
+            FileNameSearchWordAndCounter.SearchWords.Add(word); //Addar sökordet i en lista
 
             //Behövs för tester.
             DB.GetStream(); //fyller listorna
@@ -61,7 +59,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 //FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, WordsSearched.Last();, count);
                 var sentenses = LoopThroughListRowsTESTMETOD(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentenses);
-                FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, WordsSearched.Last(), count);
+                FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, FileNameSearchWordAndCounter.SearchWords.Last(), count);
                 TestPrintWord(sentenses);
             }
 
@@ -78,56 +76,11 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 }
             }
         }
-
-        private static List<string> LoopThroughListRows()
-        {
-            var sentencesContainingWord = new List<string>();
-            var splitRow = new List<string>();
-            var word = WordsSearched.Last();
-            //Loops through all the lists.
-            foreach (var keyValueCombination in DB.AllLists2)
-            {
-                var count = 0;
-                //Loops through all the rows in the list at AllList at index i.
-                for (int row = 0; row < keyValueCombination.Value.Count; row++)
-                {
-                    if (keyValueCombination.Value[row].Contains(word))
-                    {
-                        var sentences = keyValueCombination.Value[row].ToString().Split('.').ToList();
-                        //foreach (var s in sentences)
-                        //{
-                        //    if (s.Contains(word))
-                        //    {
-                        //        //count++; // Vad händer om det står: pain pain pain i rad. Då räknas bara 1.
-                        //        sentencesContainingWord.Add(s);
-                        //    }
-                        //}
-                        //bättre exakt count. ska fixas till.
-                        for (int i = 0; i < sentences.Count; i++)
-                        {
-                            if (sentences[i].Contains(word))
-                            {
-                                sentencesContainingWord.Add(sentences[i]);
-                                splitRow = sentences[i].Split(' ').ToList();
-                                for (int j = 0; j < splitRow.Count; j++)
-                                {
-                                    if (splitRow[j].Equals(word))
-                                    {
-                                        count++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, word, count);
-            }
-            return sentencesContainingWord;
-        }
+             
         private static List<string> LoopThroughListRowsTESTMETOD(List<string> list)
         {
             var sentencesContainingWord = new List<string>();
-            var word = WordsSearched.Last();
+            var word = FileNameSearchWordAndCounter.SearchWords.Last();
 
             //Loops through all the rows in the list at AllList at index i.
             foreach (var row in list)
@@ -167,7 +120,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         private static int CheckSentencesForMultipleWords(List<string> list) //Sökning på specifika ord metod
         {
             int counter = 0;
-            var word = WordsSearched.Last();
+            var word = FileNameSearchWordAndCounter.SearchWords.Last();
             for (int i = 0; i < list.Count; i++)
             {
                 var words = list[i].Split(' ');
