@@ -20,41 +20,10 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             Console.WriteLine("Here are your prior searches:\n");
 
-
             foreach (var item in FileNameSearchWordAndCounter.myCollection)
             {
                 Console.WriteLine($"Word: {item.Item2}\nTitle: {item.Item1}\nCount: {item.Item3}\n");
             }
-        }
-
-        // Hämtar filerna från DB.cs
-        public void WordManager()
-        {
-
-        }
-
-        /// <summary>
-        /// Search for how many times your word is occuring in the documents.
-        /// Returns a ranking of which documents containing the word the most.
-        /// </summary>
-        /// <param name="word"></param>
-        /// <returns></returns>
-        public void WordOccurrence(string word, List<string> list)
-        {
-            if (string.IsNullOrEmpty(word)) return;
-            int count = 0;
-
-            // Räkna ordet i alla 3 filer.
-            // Jämföra vilket doc som har mest förekomst av ordet. TEX:
-            // Lista1 = 33st ord
-            // Lista2 = 12st ord
-            // Lista3 = 79st ord
-            // Rangordna och returnera listorna plus hur många ord i varje
-
-            // --Display sample--
-            // 1. De tre bockarna bruse. Word match = 79
-            // 2. Den magiska grottan. Word match = 33
-            // 3. En saga om tre fiskar. Word match = 12
         }
 
         public static void CallerMethod(string word)
@@ -89,8 +58,8 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 //var sentences = LoopThroughListRows();
                 //var count = FindWords(sentences);
                 //FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, WordsSearched.Last();, count);
-                var sentenses = LoopThroughListRowsTESTMETOD(keyValueCombination);
-                var count = FindWordsFromSearchTESTMETOD(sentenses);
+                var sentenses = LoopThroughListRowsTESTMETOD(keyValueCombination.Value);
+                var count = CheckSentencesForMultipleWords(sentenses);
                 FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, WordsSearched.Last(), count);
                 TestPrintWord(sentenses);
             }
@@ -154,20 +123,26 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             }
             return sentencesContainingWord;
         }
-        private static List<string> LoopThroughListRowsTESTMETOD(KeyValuePair<string, List<string>> list)
+        private static List<string> LoopThroughListRowsTESTMETOD(List<string> list)
         {
             var sentencesContainingWord = new List<string>();
             var word = WordsSearched.Last();
             //Loops through all the lists.
 
             //Loops through all the rows in the list at AllList at index i.
-            foreach (var row in list.Value)
+            foreach (var row in list)
             {
-                    if (row.Contains(word))
+                if (row.ToLower().Contains(word))
+                {
+                    var sentences = row.Split('.').ToList();
+                    foreach (var s in sentences)
                     {
-                        var sentences = row.Split('.').ToString();
-                        sentencesContainingWord.Add(sentences);
+                        if (s.ToLower().Contains(word))
+                        {
+                            sentencesContainingWord.Add(s);
+                        }
                     }
+                }
             }
 
             //for (int row = 0; row < list.Values.Count; row++)
@@ -181,22 +156,20 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
 
             return sentencesContainingWord;
         }
-        public static int FindWordsFromSearchTESTMETOD(List<string> list) //Sökning på specifika ord metod
+
+        private static int CheckSentencesForMultipleWords(List<string> list) //Sökning på specifika ord metod
         {
             int counter = 0;
             var word = WordsSearched.Last();
-            var splitRow = new List<string>();
+            var words = new List<string>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Contains(word))
+                words.AddRange(list[i].Split(' '));
+                for (int j = 0; j < words.Count; j++)
                 {
-                    splitRow = list[i].Split(' ').ToList();
-                    for (int j = 0; j < splitRow.Count; j++)
+                    if (words[j].ToLower().Equals(word))
                     {
-                        if (splitRow[j].Equals(word))
-                        {
-                            counter++;
-                        }
+                        counter++;
                     }
                 }
             }
@@ -233,13 +206,13 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             Console.WriteLine($"Your word was found in these sentences:\n");
 
             //Skriver ut alla meningar där ordet hittats + markera ordet med en annan färg
-            for (int i = 1; i < sentencesContainingWord.Count; i++)
+            for (int i = 0; i < sentencesContainingWord.Count; i++)
             {
                 var splitSentence = sentencesContainingWord[i].Split(' ').ToList();
-                Console.Write($"{i}: ");
+                Console.Write($"{i+1}: ");
                 foreach (var w in splitSentence)
                 {
-                    if (!w.Contains(FileNameSearchWordAndCounter.SearchWord))
+                    if (!w.ToLower().Contains(FileNameSearchWordAndCounter.SearchWord))
                     {
                         Console.Write($"{w} ");
                     }
