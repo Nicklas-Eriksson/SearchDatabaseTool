@@ -38,13 +38,11 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         public static void LoadLists()
         {
             if (index == 1)
-            {
                 foreach (var list in DB.AllLists)
                 {
                     DB.AllLists2.Add($"Textfil:{index}.txt", list);
                     index++;
                 }
-            }
         }
 
         private static List<string> LoopThroughListRows(List<string> list)
@@ -86,9 +84,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             {
                 var words = list[i].Split(' ');
                 for (int j = 0; j < words.Length; j++)
-                {
                     if (words[j].ToLower().Equals(FileNameSearchWordAndCounter.SearchWords.Last())) counter++;
-                }
             }
 
             return counter;
