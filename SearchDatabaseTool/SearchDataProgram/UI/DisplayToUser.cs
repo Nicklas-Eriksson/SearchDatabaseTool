@@ -14,13 +14,12 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// </summary>
         internal void MainMenu()
         {
-            bool loop = false;
+            bool loop = true;
             do
             {
                 Console.Clear();
                 PrintMenuOptions();
                 var input = Helper.GetUserInput(1, 4);
-                if (input == 0) loop = false;
                 OptionForMainMenu(input);
             } while (loop);
         }
@@ -210,38 +209,26 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// <param name="i"></param>
         internal static void PrintOutPriorSearches(List<(List<Dictionary<string, string>>, string, int)> allLists, int i)
         {
-            //Varje lista ska inehålla varsitt sökord
-            //gå igenom lista 1. word He. 3 listor 86 count. 35, 9 ,24, 0
-            //gå igenom lista 2. word = Help. 5 count. 1, 0, 4, 0
-            //printa ut det
-
-            //Så lista 1 ska inehålla 
-            // 1 lista med 3 dictionarys. dict key = heList1.txt //(word+title)
-            // 1 sökord (he)
-            // 1 count (total count) 86
             if (allLists.Count > i)
             {
                 //searchword+title ex: helloTextFile1.txt
                 var keyItteration = allLists[i].Item1[i].Keys.First();//används denna på ett bra sätt??????
                 var word = allLists[i].Item2; //ok
 
-                // vill bara loopa igenom listorna som hör till första sökordet. inte alla 8 listor om man söker på 2 ord
                 int index = 0;
                 int totalWords = 0;
-                //listOfDictOfTitles ska bara innehålla de med rätt sökord
                 var dictsOfTitles = allLists[i].Item1;
                 var titlesContainingWord = new List<KeyValuePair<string, string>>();
                 foreach (var keyValuePairs in dictsOfTitles)
                 {
                     foreach (var kVP in keyValuePairs)
                     {
-                        if (kVP.Key.Equals(word+kVP.Value))
+                        if (kVP.Key.Equals(word + kVP.Value))
                         {
                             titlesContainingWord.Add(kVP);
                         }
                     }
                 }
-                //Console.WriteLine($"\n{i + 1}: ");
                 Console.WriteLine("=====================================================");
                 Console.WriteLine($"\nWord: {word}");
                 Console.WriteLine($"{word} was found in these titles:\n");
@@ -263,8 +250,9 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 }
 
                 PrintOutPriorSearches(allLists, i + index);
-                Helper.PressAnyKeyToContinue();
             }
         }
+
+        Helper.PressAnyKeyToContinue();
     }
 }
