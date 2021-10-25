@@ -10,6 +10,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         public static Dictionary<string, int> DocNameAndWordOccurance = new Dictionary<string, int>();
         public static List<int> WordMatchCounter = new List<int>();
         private static int index = 1;
+        private static List<string> AllSentences = new List<string>();
 
         internal static void CallerMethod(string word)
         {
@@ -29,15 +30,24 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 sentences = LoopThroughListRows(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentences);
 
-                FileNameSearchWordAndCounter.FillTuple(
-                    keyValueCombination.Key,
-                    FileNameSearchWordAndCounter.SearchWords.Last(),
-                    count
-                    );
+                if (count > 0)
+                {
+                    FileNameSearchWordAndCounter.FillTuple(
+                        keyValueCombination.Key,
+                        FileNameSearchWordAndCounter.SearchWords.Last(),
+                        count
+                        );
+
+                    for (int i = 0; i < sentences.Count; i++)
+                    {
+                        AllSentences.Add(sentences[i]);
+                    }
+                }
             }
-            //temp utflyttad
-            DisplayToUser.PrintWord(sentences);
+            DisplayToUser.PrintWord(AllSentences);
         }
+
+
 
         /// <summary>
         /// Loads up the list with all the txt docs once.
