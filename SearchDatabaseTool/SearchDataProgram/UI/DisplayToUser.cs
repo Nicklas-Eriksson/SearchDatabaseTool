@@ -223,28 +223,34 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             {
                 //searchword+title ex: helloTextFile1.txt
                 var keyItteration = allLists[i].Item1[i].Keys.First();
-                    var word = allLists[i].Item2; //ok
+                var word = allLists[i].Item2; //ok
 
                 // vill bara loopa igenom listorna som hör till första sökordet. inte alla 8 listor om man söker på 2 ord
+                int index = 0;
+                int totalWords = 0;
+                var listOfDictOfTitles = allLists[i].Item1; //ok
+                Console.WriteLine($"\n{i + 1}: ");
+                Console.WriteLine($"Word: {word}");
+                Console.WriteLine($"{word} was found in these titles:\n");
+
+
                 if (keyItteration.Contains(word))
                 {
-                    var listOfDictOfTitles = allLists[i].Item1; //ok
-                    Console.WriteLine($"\n{i + 1}: ");
-                    Console.WriteLine($"Word: {word}");
-                    Console.WriteLine($"{word} was found in these titles:\n");
-
-                    foreach (var values in listOfDictOfTitles)
+                    foreach (var keyValuePair in listOfDictOfTitles)
                     {
-                        foreach (var v in values)
+                        foreach (var v in keyValuePair.Values)
                         {
-                            Console.WriteLine( $"Word: {word} title:{v.Value}" );
-                            Console.WriteLine( $"Title:{v.Value}" );
-                            Console.WriteLine( $"Count: {allLists[i].Item3}" );
+                            Console.WriteLine($"Title:{v}");
+                            Console.WriteLine($"Count: {allLists[index].Item3}\n");
+                            totalWords += allLists[index].Item3;
+                            index++;
                         }
                     }
+                    Console.WriteLine($"Total count: {totalWords}");
+
                 }
-               
-                PrintOutPriorSearches(allLists, i + 1);
+
+                PrintOutPriorSearches(allLists, i + index);
             }
         }
     }
