@@ -127,6 +127,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             {
                 case 1:
                     PrintOutPriorSearches(FileNameSearchWordAndCounter.MyCollection, 0);
+                    Helper.PressAnyKeyToContinue();
                     break;
                 case 2:
                     PrintASpecificSearchResult(FileNameSearchWordAndCounter.SearchWords);
@@ -252,7 +253,5 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 PrintOutPriorSearches(allLists, i + index);
             }
         }
-
-        Helper.PressAnyKeyToContinue();
     }
 }
