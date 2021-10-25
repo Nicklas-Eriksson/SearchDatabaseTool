@@ -263,6 +263,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 }
 
                 PrintOutPriorSearches(allLists, i + index);
+                Helper.PressAnyKeyToContinue();
             }
         }
     }
