@@ -156,9 +156,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             if (result == 0)
                 MainMenu();
             else
-            {
                 ChosenResult(searchResultCollection[result - 1]);
-            }
             Helper.PressAnyKeyToContinue();
         }
 
@@ -211,9 +209,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         {
             if (allLists.Count > i)
             {
-                //searchword+title ex: helloTextFile1.txt
-                var keyItteration = allLists[i].Item1[i].Keys.First();//används denna på ett bra sätt??????
-                var word = allLists[i].Item2; //ok
+                var word = allLists[i].Item2;
 
                 int index = 0;
                 int totalWords = 0;
@@ -233,24 +229,25 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 Console.WriteLine($"\nWord: {word}");
                 Console.WriteLine($"{word} was found in these titles:\n");
 
-
-                if (keyItteration.Contains(word))
-                {
-                    var x = i;
-                    foreach (var keyValuePair in titlesContainingWord)
-                    {
-                        Console.WriteLine($"Title:{keyValuePair.Value}");
-                        Console.WriteLine($"Count: {allLists[x].Item3}\n");
-                        totalWords += allLists[x].Item3;
-                        x++;
-                        index++;
-                    }
-
-                    Console.WriteLine($"Total count: {totalWords}");
-                }
+                PrintOutWordCounterForEachTitle(allLists, i, word, ref index, ref totalWords, titlesContainingWord);
 
                 PrintOutPriorSearches(allLists, i + index);
             }
+        }
+
+        private static void PrintOutWordCounterForEachTitle(List<(List<Dictionary<string, string>>, string, int)> allLists, int i, string word, ref int index, ref int totalWords, List<KeyValuePair<string, string>> titlesContainingWord)
+        {
+            var x = i;
+            foreach (var keyValuePair in titlesContainingWord)
+            {
+                Console.WriteLine($"Title:{keyValuePair.Value}");
+                Console.WriteLine($"Count: {allLists[x].Item3}\n");
+                totalWords += allLists[x].Item3;
+                x++;
+                index++;
+            }
+
+            Console.WriteLine($"Total count: {totalWords}");
         }
     }
 }
