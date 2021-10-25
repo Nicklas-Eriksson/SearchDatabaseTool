@@ -169,8 +169,8 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         public static void PrintWord(List<string> sentencesContainingWord)
         {
             var nr = FileNameSearchWordAndCounter.TotalWordCounter;
-            var searchWord = FileNameSearchWordAndCounter.SearchWord;
-            var word = searchWord[0].ToString().ToUpper() + (searchWord.Substring(1)); //searchword can be null
+            var searchWord = FileNameSearchWordAndCounter.SearchWords.Last();
+            var word = searchWord[0].ToString().ToUpper() + (searchWord.Substring(1));
 
             Console.WriteLine($"\nYour word: {word} was found {nr} times.");
             if (nr != 0) Console.WriteLine($"{word} was found in these sentences:\n");
