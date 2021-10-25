@@ -122,7 +122,6 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
 
         private void OptionForPrintPreviousResults()
         {
-            Console.Write("Option: ");
             switch (Helper.GetUserInput(1, 4))
             {
                 case 1:
@@ -173,7 +172,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         {
             var nr = FileNameSearchWordAndCounter.TotalWordCounter;
             var searchWord = FileNameSearchWordAndCounter.SearchWord;
-            var word = searchWord[0].ToString().ToUpper() + (searchWord.Substring(1));
+            var word = searchWord[0].ToString().ToUpper() + (searchWord.Substring(1)); //searchword can be null
 
             Console.WriteLine($"\nYour word: {word} was found {nr} times.");
             if (nr != 0) Console.WriteLine($"{word} was found in these sentences:\n");

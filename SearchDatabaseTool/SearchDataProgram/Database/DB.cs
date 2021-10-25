@@ -61,7 +61,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
                     }
                 }
             }
-        }             
+        }
 
         internal static void PrintChosenTxt(int option)
         {

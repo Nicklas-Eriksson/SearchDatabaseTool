@@ -22,6 +22,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
 
         public static void HolderMethodForSearching()
         {
+            AllSentences.Clear();
             //DB.AllList2 = Dictionary with key = title, value = list of 
             List<string> sentences = new List<string>();
             foreach (var keyValueCombination in DB.AllLists2)
@@ -29,7 +30,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 //Picks out the sentences from all the txt files containing the sentences.
                 sentences = LoopThroughListRows(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentences);
-
                 if (count > 0)
                 {
                     FileNameSearchWordAndCounter.FillTuple(
@@ -37,7 +37,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                         FileNameSearchWordAndCounter.SearchWords.Last(),
                         count
                         );
-
                     for (int i = 0; i < sentences.Count; i++)
                     {
                         AllSentences.Add(sentences[i]);
@@ -46,8 +45,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             }
             DisplayToUser.PrintWord(AllSentences);
         }
-
-
 
         /// <summary>
         /// Loads up the list with all the txt docs once.
@@ -90,7 +87,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                     }
                 }
             }
-
             return sentencesContainingWord;
         }
 
@@ -103,7 +99,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 for (int j = 0; j < words.Length; j++)
                     if (words[j].ToLower().Equals(FileNameSearchWordAndCounter.SearchWords.Last())) counter++;
             }
-
             return counter;
         }
 
