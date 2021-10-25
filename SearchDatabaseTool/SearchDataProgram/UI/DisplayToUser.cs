@@ -203,12 +203,19 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             new DisplayToUser().MainMenu();
         }
 
-        internal static void PrintOutPriorSearches(List<(string, string, int)> allLists, int i)
+        internal static void PrintOutPriorSearches(List<(List<string>, string, int)> allLists, int i)
         {
+            if (i > 0) Console.WriteLine("Here are your prior searches:\n");
+
             if (allLists.Count > i)
             {
-                Console.WriteLine("Here are your prior searches:\n");
-                Console.WriteLine($"Word: {allLists.FirstOrDefault().Item2}\nTitle: {allLists.FirstOrDefault().Item1}\nCount: {allLists.FirstOrDefault().Item3}\n");
+                Console.WriteLine($"{i + 1}: ");
+                Console.WriteLine($"Word: {allLists[i].Item2}");
+                foreach (var title in allLists[i].Item1)
+                {
+                    Console.WriteLine($"Title: {title}");
+                }
+                Console.WriteLine($"Count: {allLists[i].Item3}\n");
                 PrintOutPriorSearches(allLists, i + 1);
             }
         }

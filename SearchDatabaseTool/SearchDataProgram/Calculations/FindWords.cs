@@ -40,7 +40,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             if (index == 1)
                 foreach (var list in DB.AllLists)
                 {
-                    DB.AllLists2.Add($"Textfil:{index}.txt", list);
+                    DB.AllLists2.Add(new List<string>() { $"Textfil:{index}.txt" }, list);
                     index++;
                 }
         }
