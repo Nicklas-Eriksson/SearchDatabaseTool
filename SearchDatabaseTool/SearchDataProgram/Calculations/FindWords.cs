@@ -14,7 +14,6 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         internal static void CallerMethod(string word)
         {
             FileNameSearchWordAndCounter.SearchWords.Add(word); //Addar sökordet i en lista
-
             DB.GetStream(); //fyller listorna
             LoadLists(); //adderar namn på listor + listorna
             HolderMethodForSearching();
@@ -24,11 +23,11 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             foreach (var keyValueCombination in DB.AllLists2)
             {
-                var sentenses = LoopThroughListRows(keyValueCombination.Value);
-                var count = CheckSentencesForMultipleWords(sentenses);
-                //var count = CheckSentencesForMultipleWords(sentenses, 0, 0);
+                //Picks out the sentences from all the txt files containing the sentences
+                var sentences = LoopThroughListRows(keyValueCombination.Value);
+                var count = CheckSentencesForMultipleWords(sentences);
                 FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, FileNameSearchWordAndCounter.SearchWords.Last(), count);
-                DisplayToUser.PrintWord(sentenses);
+                DisplayToUser.PrintWord(sentences);
             }
         }
 
@@ -61,14 +60,14 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                         if (s.ToLower().Contains(word))
                         {
                             var words = s.ToLower().Split(' ');
-                            var sentenseMatchExact = new List<bool>();
+                            var sentenceMatchExact = new List<bool>();
                             foreach (var w in words)
                             {
-                                if (w.Equals(word)) sentenseMatchExact.Add(true);
-                                else sentenseMatchExact.Add(false);
+                                if (w.Equals(word)) sentenceMatchExact.Add(true);
+                                else sentenceMatchExact.Add(false);
                             }
 
-                            if (sentenseMatchExact.Contains(true)) sentencesContainingWord.Add(s);
+                            if (sentenceMatchExact.Contains(true)) sentencesContainingWord.Add(s);
                         }
                     }
                 }

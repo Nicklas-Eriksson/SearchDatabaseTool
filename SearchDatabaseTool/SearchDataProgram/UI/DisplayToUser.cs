@@ -204,7 +204,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         }
 
         /// <summary>
-        /// 
+        /// List = FileNameSearchWordAndCounter.MyCollection >> List<titles.txts, searchWord, counter>
         /// </summary>
         /// <param name="allLists"></param>
         /// <param name="i"></param>
