@@ -210,41 +210,40 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// <param name="i"></param>
         internal static void PrintOutPriorSearches(List<(List<Dictionary<string, string>>, string, int)> allLists, int i)
         {
+            //Varje lista ska inehålla varsitt sökord
+            //gå igenom lista 1. word He. 3 listor 86 count. 35, 9 ,24, 0
+            //gå igenom lista 2. word = Help. 5 count. 1, 0, 4, 0
+            //printa ut det
+
+            //Så lista 1 ska inehålla 
+            // 1 lista med 3 dictionarys. dict key = heList1.txt //(word+title)
+            // 1 sökord (he)
+            // 1 count (total count) 86
             if (allLists.Count > i)
             {
-                var titles = allLists[i].Item1;
-                var word = allLists[i].Item2;
-                Console.WriteLine($"\n{i + 1}: ");
-                Console.WriteLine($"Word: {word}");
-                Console.WriteLine($"{word} was found in these titles:\n");
-                //if(titles..Contains(word))
-                //for (int j = 0; j < titles.Count; j++)
-                //{
-                //    Console.WriteLine(titles[j].Values);
-                //}
-                foreach (var values in titles)
+                //searchword+title ex: helloTextFile1.txt
+                var keyItteration = allLists[i].Item1[i].Keys.First();
+                    var word = allLists[i].Item2; //ok
+
+                // vill bara loopa igenom listorna som hör till första sökordet. inte alla 8 listor om man söker på 2 ord
+                if (keyItteration.Contains(word))
                 {
-                    foreach (var v in values)
+                    var listOfDictOfTitles = allLists[i].Item1; //ok
+                    Console.WriteLine($"\n{i + 1}: ");
+                    Console.WriteLine($"Word: {word}");
+                    Console.WriteLine($"{word} was found in these titles:\n");
+
+                    foreach (var values in listOfDictOfTitles)
                     {
-                        Console.WriteLine(v.Value);
+                        foreach (var v in values)
+                        {
+                            Console.WriteLine( $"Word: {word} title:{v.Value}" );
+                            Console.WriteLine( $"Title:{v.Value}" );
+                            Console.WriteLine( $"Count: {allLists[i].Item3}" );
+                        }
                     }
                 }
-
-                //if (titles[i].Keys.First().Equals(word + titles))
-                //{
-                //    foreach (var item in titles)
-                //    {
-                //        foreach (var k in item.Keys)
-                //        {
-                //            Console.WriteLine(k); //blir bara collection generic stuff
-                //        }
-                //    }
-                //}
-                //foreach (var title in allLists[i].Item1)
-                //{
-                //    Console.WriteLine($"Title: {title}");
-                //}
-                Console.WriteLine($"Count: {allLists[i].Item3}\n");
+               
                 PrintOutPriorSearches(allLists, i + 1);
             }
         }
