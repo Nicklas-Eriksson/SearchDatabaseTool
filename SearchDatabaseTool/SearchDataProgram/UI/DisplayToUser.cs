@@ -222,32 +222,44 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             if (allLists.Count > i)
             {
                 //searchword+title ex: helloTextFile1.txt
-                var keyItteration = allLists[i].Item1[i].Keys.First();
+                var keyItteration = allLists[i].Item1[i].Keys.First();//används denna på ett bra sätt??????
                 var word = allLists[i].Item2; //ok
 
                 // vill bara loopa igenom listorna som hör till första sökordet. inte alla 8 listor om man söker på 2 ord
                 int index = 0;
                 int totalWords = 0;
-                var listOfDictOfTitles = allLists[i].Item1; //ok
-                Console.WriteLine($"\n{i + 1}: ");
-                Console.WriteLine($"Word: {word}");
+                //listOfDictOfTitles ska bara innehålla de med rätt sökord
+                var dictsOfTitles = allLists[i].Item1;
+                var titlesContainingWord = new List<KeyValuePair<string, string>>();
+                foreach (var keyValuePairs in dictsOfTitles)
+                {
+                    foreach (var kVP in keyValuePairs)
+                    {
+                        if (kVP.Key.Equals(word+kVP.Value))
+                        {
+                            titlesContainingWord.Add(kVP);
+                        }
+                    }
+                }
+                //Console.WriteLine($"\n{i + 1}: ");
+                Console.WriteLine("=====================================================");
+                Console.WriteLine($"\nWord: {word}");
                 Console.WriteLine($"{word} was found in these titles:\n");
 
 
                 if (keyItteration.Contains(word))
                 {
-                    foreach (var keyValuePair in listOfDictOfTitles)
+                    var x = i;
+                    foreach (var keyValuePair in titlesContainingWord)
                     {
-                        foreach (var v in keyValuePair.Values)
-                        {
-                            Console.WriteLine($"Title:{v}");
-                            Console.WriteLine($"Count: {allLists[index].Item3}\n");
-                            totalWords += allLists[index].Item3;
-                            index++;
-                        }
+                        Console.WriteLine($"Title:{keyValuePair.Value}");
+                        Console.WriteLine($"Count: {allLists[x].Item3}\n");
+                        totalWords += allLists[x].Item3;
+                        x++;
+                        index++;
                     }
-                    Console.WriteLine($"Total count: {totalWords}");
 
+                    Console.WriteLine($"Total count: {totalWords}");
                 }
 
                 PrintOutPriorSearches(allLists, i + index);
