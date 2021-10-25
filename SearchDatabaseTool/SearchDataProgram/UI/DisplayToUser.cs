@@ -157,9 +157,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             if (result == 0)
                 MainMenu();
             else
-            {
                 ChosenResult(searchResultCollection[result - 1]);
-            }
             Helper.PressAnyKeyToContinue();
         }
 
