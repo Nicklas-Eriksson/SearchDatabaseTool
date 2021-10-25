@@ -14,7 +14,7 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// </summary>
         internal void MainMenu()
         {
-            bool loop = false;
+            bool loop = true;
             do
             {
                 Console.Clear();
