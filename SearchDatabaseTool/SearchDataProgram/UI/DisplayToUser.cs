@@ -208,16 +208,42 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
         /// </summary>
         /// <param name="allLists"></param>
         /// <param name="i"></param>
-        internal static void PrintOutPriorSearches(List<(List<string>, string, int)> allLists, int i)
+        internal static void PrintOutPriorSearches(List<(List<Dictionary<string, string>>, string, int)> allLists, int i)
         {
             if (allLists.Count > i)
             {
+                var titles = allLists[i].Item1;
+                var word = allLists[i].Item2;
                 Console.WriteLine($"\n{i + 1}: ");
-                Console.WriteLine($"Word: {allLists[i].Item2}");
-                foreach (var title in allLists[i].Item1)
+                Console.WriteLine($"Word: {word}");
+                Console.WriteLine($"{word} was found in these titles:\n");
+                //if(titles..Contains(word))
+                //for (int j = 0; j < titles.Count; j++)
+                //{
+                //    Console.WriteLine(titles[j].Values);
+                //}
+                foreach (var values in titles)
                 {
-                    Console.WriteLine($"Title: {title}");
+                    foreach (var v in values)
+                    {
+                        Console.WriteLine(v.Value);
+                    }
                 }
+
+                //if (titles[i].Keys.First().Equals(word + titles))
+                //{
+                //    foreach (var item in titles)
+                //    {
+                //        foreach (var k in item.Keys)
+                //        {
+                //            Console.WriteLine(k); //blir bara collection generic stuff
+                //        }
+                //    }
+                //}
+                //foreach (var title in allLists[i].Item1)
+                //{
+                //    Console.WriteLine($"Title: {title}");
+                //}
                 Console.WriteLine($"Count: {allLists[i].Item3}\n");
                 PrintOutPriorSearches(allLists, i + 1);
             }

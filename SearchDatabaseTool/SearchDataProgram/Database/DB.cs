@@ -12,8 +12,8 @@ namespace SearchDatabaseTool.SearchDataProgram.Database
         /// <summary>
         /// Key = Namn på listan.  Value = listan med txt.
         /// </summary>
-        public static Dictionary<List<string>, List<string>> AllLists2 = new Dictionary<List<string>, List<string>>();
-        //public static List<Dictionary<string, int>> test = new List<Dictionary<string, int>>();
+        public static Dictionary<string, List<string>> AllLists2 = new Dictionary<string, List<string>>();
+        //public static Dictionary<List<string>, List<string>> AllLists2 = new Dictionary<List<string>, List<string>>();
         //public static Dictionary<string, Dictionary<string, int>> test = new Dictionary<string, Dictionary<string, int>>();
 
         public static List<string> List1000 = new List<string>();

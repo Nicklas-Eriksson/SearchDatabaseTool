@@ -21,14 +21,22 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
 
         public static void HolderMethodForSearching()
         {
+            //DB.AllList2 = Dictionary with key = title, value = list of 
+            List<string> sentences = new List<string>();
             foreach (var keyValueCombination in DB.AllLists2)
             {
-                //Picks out the sentences from all the txt files containing the sentences
-                var sentences = LoopThroughListRows(keyValueCombination.Value);
+                //Picks out the sentences from all the txt files containing the sentences.
+                sentences = LoopThroughListRows(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentences);
-                FileNameSearchWordAndCounter.FillTuple(keyValueCombination.Key, FileNameSearchWordAndCounter.SearchWords.Last(), count);
-                DisplayToUser.PrintWord(sentences);
+
+                FileNameSearchWordAndCounter.FillTuple(
+                    keyValueCombination.Key,
+                    FileNameSearchWordAndCounter.SearchWords.Last(),
+                    count
+                    );
             }
+            //temp utflyttad
+            DisplayToUser.PrintWord(sentences);
         }
 
         /// <summary>
@@ -39,7 +47,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             if (index == 1)
                 foreach (var list in DB.AllLists)
                 {
-                    DB.AllLists2.Add(new List<string>() { $"Textfil:{index}.txt" }, list);
+                    DB.AllLists2.Add($"Textfil:{index}.txt", list);
                     index++;
                 }
         }
