@@ -4,6 +4,7 @@ using SearchDatabaseTool.SearchDataProgram.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace SearchDatabaseTool.SearchDataProgram.UI
 {
@@ -151,12 +152,17 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                 Console.WriteLine($"|| {index++}. {r}");
             }
             Console.WriteLine("\nChoose your result to inspect further");
-            Console.Write("Option: ");
             var result = Helper.GetUserInput(1, searchResultCollection.Count);
             if (result == 0)
+            {
                 MainMenu();
+            }
             else
-                ChosenResult(searchResultCollection[result - 1]);
+            {
+                var list = FindWords.FetchSpecificSearchResults(searchResultCollection[result - 1]);
+                PrintSpecificResults(list, searchResultCollection[result - 1]);
+            }
+            //ChosenResult(searchResultCollection[result - 1]);
             Helper.PressAnyKeyToContinue();
         }
 
@@ -191,7 +197,6 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
                         Console.Write(" ");
                     }
                 }
-
                 Console.WriteLine();
             }
 
@@ -248,6 +253,15 @@ namespace SearchDatabaseTool.SearchDataProgram.UI
             }
 
             Console.WriteLine($"Total count: {totalWords}");
+        }
+        private static void PrintSpecificResults(List<string> list, string word)
+        {
+            Console.WriteLine($"\nWord: {word}");
+            Console.WriteLine($"Previous results containing {word}\n");
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {list[i]}");
+            }
         }
     }
 }

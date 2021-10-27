@@ -11,6 +11,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         public static List<int> WordMatchCounter = new List<int>();
         private static int index = 1;
         private static List<string> AllSentences = new List<string>();
+        private static Dictionary<string, string> previousSearches = new Dictionary<string, string>();
 
         internal static void CallerMethod(string word)
         {
@@ -24,11 +25,13 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             AllSentences.Clear();
             //DB.AllList2 = Dictionary with key = title, value = list of 
-            List<string> sentences = new List<string>();
+            //var sentences = new List<string>();
             foreach (var keyValueCombination in DB.AllLists2)
             {
                 //Picks out the sentences from all the txt files containing the sentences.
-                sentences = LoopThroughListRows(keyValueCombination.Value);
+                //if(searchword.Contains(prevsearchedWords)
+                //   var sentences = CheckForPreviousSearchedWord() psuedo.
+                var sentences = LoopThroughListRows(keyValueCombination.Value);
                 var count = CheckSentencesForMultipleWords(sentences);
                 if (count > 0)
                 {
@@ -44,6 +47,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                 }
             }
             DisplayToUser.PrintWord(AllSentences);
+
         }
 
         /// <summary>
@@ -63,6 +67,7 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
         {
             var sentencesContainingWord = new List<string>();
             var word = FileNameSearchWordAndCounter.SearchWords.Last();
+            bool sentenceExists = false;
 
             //Loops through all the rows in the list at AllList at index i.
             foreach (var row in list)
@@ -82,14 +87,43 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
                                 else sentenceMatchExact.Add(false);
                             }
 
-                            if (sentenceMatchExact.Contains(true)) sentencesContainingWord.Add(s);
+                            if (sentenceMatchExact.Contains(true))
+                            {
+                                sentencesContainingWord.Add(s);
+                                foreach (var item in previousSearches)
+                                {
+                                    if (item.Key.Equals(s))
+                                    {
+                                        sentenceExists = true;
+                                    }
+                                }
+                                if (!sentenceExists)
+                                {
+                                    previousSearches.Add(s, word);
+                                }
+                            }
                         }
                     }
                 }
             }
             return sentencesContainingWord;
         }
-
+        public static List<string> FetchSpecificSearchResults(string word)
+        {
+            //var word = FileNameSearchWordAndCounter.SearchWords.Last();
+            var returnList = new List<string>();
+            if(word != null)
+            {
+                foreach (var s in previousSearches)
+                {
+                    if (s.Value.Equals(word))
+                    {
+                        returnList.Add(s.Key);
+                    }
+                }
+            }
+            return returnList;
+        }
         private static int CheckSentencesForMultipleWords(List<string> list)
         {
             int counter = 0;
@@ -101,7 +135,10 @@ namespace SearchDatabaseTool.SearchDataProgram.Calculations
             }
             return counter;
         }
+        private static void CheckForPreviousSearchedWord()
+        {
 
+        }
         //private static int CheckSentencesForMultipleWords(List<string> list, int counter, int i)
         //{
 
